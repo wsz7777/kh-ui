@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    /* 基础配置 */
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "removeComments": false,
+    "declaration": true,
+    "sourceMap": true,
+    "jsx": "preserve",
+
+    /* 强类型检查配置 */
+    "strict": true,
+    "noImplicitAny": false,
+
+    /* 模块分析配置 */
+    "rootDir": "src",
+    "baseUrl": ".",
+    "outDir": "lib",
+    // "declarationDir": "lib/types",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+
+    "importHelpers": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "types": ["jest"]
+    // "paths": {
+    //   "@/*": ["src/*"]
+    // }
+  },
+  "include": ["src/**/*.ts", "test", "src/packages/index.tsx"],
+  "exclude": ["node_modules", "lib"]
+}
