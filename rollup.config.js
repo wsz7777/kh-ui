@@ -1,14 +1,16 @@
 import path from "path";
 import babel from "@rollup/plugin-babel";
+
 import typescript from "@rollup/plugin-typescript";
+
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import clear from "rollup-plugin-clear";
+import postcss from "rollup-plugin-postcss";
 import { eslint } from "rollup-plugin-eslint";
-import vueJs from "rollup-plugin-vue";
 
 // import { DEFAULT_EXTENSIONS } from "@babel/core";
-const extensions = [".js", ".jsx", ".ts", ".tsx"];
+const extensions = [".ts", ".tsx"];
 
 import pkg from "./package.json";
 
@@ -23,34 +25,45 @@ const rollupConfig = {
   input: paths.input,
   output: {
     dir: "lib",
-    format: "es",
+    format: "esm",
     name: pkg.name,
     sourcemap: true,
   },
   // external: ["crypto-js"],
-  external: [/@babel\/runtime/,'vue'],
-  plugins: [
-    clear({ targets: ["lib"] }),
-    // // 验证导入的文件
-    // eslint({
-    //   throwOnError: true,
-    //   throwOnWarning: true,
-    //   include: ["src/**/*.ts"],
-    //   exclude: ["node_modules/**", "lib/**", "*.js", "test/**"],
-    // }),
+  external: [
+    /@babel\/runtime/,
+    "vue",
+    "vue-class-component",
+    // "vue-property-decorator",
+  ],
 
-    resolve({
-      extensions,
+  plugins: [
+    // 清理上次打包结果
+    clear({ targets: ["lib"] }),
+    // 验证导入的文件
+    eslint({
+      // fix: true,
+      throwOnError: true,
+      throwOnWarning: true,
+      include: ["src/**/*.ts", "src/**/*.tsx"],
+      exclude: ["node_modules/**", "lib/**", "*.js", "test/**"],
     }),
+
+    // ts => js 转换
     typescript(),
+    // 解析依赖
+    resolve({ extensions }),
+    commonjs(),
+    // js => 目标可用
     babel({
       babelHelpers: "runtime",
-      // 只转换源代码，不运行外部依赖
-      exclude: "node_modules/**",
-      // babel 默认不支持 ts 需要手动添加
+      // exclude: "node_modules/**",
       extensions,
     }),
-    commonjs(),
+    postcss({
+      extract: true,
+      extensions: ["scss"],
+    }),
     // vueJs(),
   ],
 };

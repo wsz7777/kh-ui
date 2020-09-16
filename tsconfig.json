@@ -25,11 +25,12 @@
     "importHelpers": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["jest"]
+    "types": ["jest"],
+    "typeRoots": ["src"]
     // "paths": {
     //   "@/*": ["src/*"]
     // }
   },
-  "include": ["src/**/*.ts", "test", "src/packages/index.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "typings.d.ts"],
   "exclude": ["node_modules", "lib"]
 }

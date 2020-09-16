@@ -1,23 +1,12 @@
 import { Vue, Component } from "vue-property-decorator";
 
-// import Vue, { VNode } from "vue";
-
-// export const cp1 = Vue.extend({
-//   name: "color-picker",
-//   template: "<div>color-picker</div>",
-// });
-// export const cp1 = Vue.extend({
-//   name: "color-picker",
-//   render() {
-//     return <div>color-picker</div>;
-//   },
-// });
+import S from "./index.module.scss";
 
 @Component
 export class cp extends Vue {
   name = "color-picker";
-  
+
   render() {
-    return <div>color-picker</div>;
+    return <div class={S.top}>color-picker</div>;
   }
 }
